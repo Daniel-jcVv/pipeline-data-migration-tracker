@@ -1,0 +1,115 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data/migration.db
+
+# Credentials
+credentials.json
+secrets.yaml
+*.key
+*.pem
+*.ppk
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+
+# Data Files (if you don't want to commit large data files)
+# Uncomment the lines below if data files should not be committed
+# data/*.csv
+# data/*.json
+# data/*.xlsx
+# data/*.parquet
+data/lakehouse/
+
+# Test Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Fabric Artifacts
+*.pbix
+*.pbit
+
+# OS Files
+Thumbs.db
+Desktop.ini
+
+# Backup Files
+*.bak
+*.backup
+*~
+
+# Compiled Files
+*.pyc
+*.pyo
+
+# notes
+notes/
+*.md
+
+# another files
+senior/
+

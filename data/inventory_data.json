@@ -1,0 +1,137 @@
+[
+  {
+    "product_id": "P001",
+    "productName": "Apple iPhone13",
+    "stock": "25 units",
+    "last_stocked": "2023/06/01",
+    "warehouse": "Delhi_1",
+    "cost_price": "$700",
+    "available": "YES"
+  },
+  {
+    "product_id": "P002",
+    "productName": "Samsung Galaxy S21",
+    "stock": " 12 ",
+    "last_stocked": "01-07-2023",
+    "warehouse": "BLR#2",
+    "cost_price": "INR 72000",
+    "available": "yes"
+  },
+  {
+    "product_id": "P003",
+    "productName": "Oneplus Nord",
+    "stock": "twenty",
+    "last_stocked": "2023.06.30",
+    "warehouse": "mumbai@3",
+    "cost_price": "Rs. 25000",
+    "available": "Y"
+  },
+  {
+    "product_id": "P004",
+    "productName": "Nokia 3310",
+    "stock": "",
+    "last_stocked": "2023/07/05",
+    "warehouse": "",
+    "cost_price": null,
+    "available": ""
+  },
+  {
+    "product_id": "P005",
+    "productName": "Xiaomi note 12 pro",
+    "stock": "55",
+    "last_stocked": "07-12-2023",
+    "warehouse": "hyd!zone2",
+    "cost_price": "$299",
+    "available": "True"
+  },
+  {
+    "product_id": "P006",
+    "productName": "Vivo V25",
+    "stock": null,
+    "last_stocked": "2023-07-20",
+    "warehouse": "chn",
+    "cost_price": "350USD",
+    "available": "NO"
+  },
+  {
+    "product_id": "P007",
+    "productName": "Motorola Edge-40",
+    "stock": "0",
+    "last_stocked": "25.07.2023",
+    "warehouse": "Delhi_1",
+    "cost_price": "USD500",
+    "available": "false"
+  },
+  {
+    "product_id": "P008",
+    "productName": "LG Velvet",
+    "stock": "fifteen",
+    "last_stocked": "2023-06-18",
+    "warehouse": "pune#city",
+    "cost_price": "\u20b932000",
+    "available": "Yes"
+  },
+  {
+    "product_id": "P009",
+    "productName": "Realme X50",
+    "stock": "30 ",
+    "last_stocked": "06-07-2023",
+    "warehouse": "gurgaon-56",
+    "cost_price": "USD 399",
+    "available": "YES"
+  },
+  {
+    "product_id": "P010",
+    "productName": "Asus ROG Phone",
+    "stock": "twenty five",
+    "last_stocked": "2023.07.10",
+    "warehouse": "bangalore!",
+    "cost_price": "Rs.59999",
+    "available": "Y"
+  },
+  {
+    "product_id": "P011",
+    "productName": "Google Pixel 6a",
+    "stock": "35",
+    "last_stocked": "07/15/2023",
+    "warehouse": "Hyderabad$",
+    "cost_price": "$449",
+    "available": "yes"
+  },
+  {
+    "product_id": "P012",
+    "productName": "Sony Xperia 5",
+    "stock": "22",
+    "last_stocked": "15-07-2023",
+    "warehouse": "coimbatore@",
+    "cost_price": "Rs 65000",
+    "available": "Yes"
+  },
+  {
+    "product_id": "P013",
+    "productName": "Nothing Phone 2",
+    "stock": "null",
+    "last_stocked": "2023/07/18",
+    "warehouse": "delhi$",
+    "cost_price": "$599",
+    "available": "True"
+  },
+  {
+    "product_id": "P014",
+    "productName": "iQOO Neo 7",
+    "stock": "eighteen",
+    "last_stocked": "2023-07-22",
+    "warehouse": "chd!",
+    "cost_price": "Rs.32000",
+    "available": "Yes"
+  },
+  {
+    "product_id": "P015",
+    "productName": "Infinix Zero 5G",
+    "stock": " 10 ",
+    "last_stocked": "23/07/2023",
+    "warehouse": "kolkata#",
+    "cost_price": "$250",
+    "available": "yes"
+  }
+]

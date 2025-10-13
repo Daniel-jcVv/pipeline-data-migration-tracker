@@ -1,0 +1,13 @@
+
+# aws S3 conector
+boto3>=1.26.0
+
+# SFTP Connection
+paramiko>=3.0.0
+
+# Data Processing
+pandas>=2.0.0
+
+# Excel support
+openpyxl>=3.1.0
+

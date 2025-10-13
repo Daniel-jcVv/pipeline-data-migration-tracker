@@ -1,0 +1,40 @@
+# Data Migration Project Dependencies
+# ====================================
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+openpyxl>=3.1.0  # For Excel file support
+
+# Connectors
+paramiko>=3.0.0  # SFTP connector
+boto3>=1.26.0    # AWS S3 connector
+
+# Database
+sqlite3-python  # SQLite support (built-in, but listed for clarity)
+
+# Configuration
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# Logging & Utilities
+colorama>=0.4.6  # Colored terminal output
+tqdm>=4.65.0     # Progress bars
+
+# For Fabric integration (when deploying to Fabric)
+# azure-identity>=1.12.0
+# azure-storage-blob>=12.14.0
+
+# Testing (optional)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+
+# Code Quality (optional)
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# Documentation (optional)
+sphinx>=6.0.0
+sphinx-rtd-theme>=1.2.0

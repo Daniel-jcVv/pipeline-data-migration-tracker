@@ -1,0 +1,55 @@
+# Data migration configuration
+
+# File tracker configuration
+file_tracker:
+  connection_string: "sqlite:///data/migration.db"
+  # For Fabric Warehouse:
+  # connection_string: "warehouse://your-warehouse-connection-string"
+
+# Source Configuration (SFTP)
+source_sftp:
+  host: "localhost"
+  port: 22
+  username: "fabricdata"
+  password: "fabric-migration25"
+  path: "/migration-files/csv/"
+  timeout: 30
+
+# source configuration (AWS S3)
+source_s3:
+  bucket_name: "fabric-migration-data"
+  aws_access_key_id: "YOUR_ACCESS_KEY"
+  aws_secret_access_key: "YOUR_SECRET_KEY"
+  region_name: "us-east-1"
+  path: "migration-data/csv/"
+
+# Destination configuration
+destination:
+  # Local simulation of Lakehouse
+  lakehouse_path: "data/lakehouse/bronze/"
+
+  # Fabric lakehouse (for actual deployment)
+  fabric_lakehouse:
+    workspace: "my-workspace-name"
+    lakehouse_name: "migration-lakehouse"
+    path: "/Files/bronze/"
+
+  # Fabric Warehouse (for actual deployment)
+  fabric_warehouse:
+    workspace: "my-workspace-name"
+    warehouse_name: "migration-warehouse"
+    table: "dim_product"
+
+# Pipeline configuration
+pipeline:
+  file_pattern: "*.csv"
+  batch_size: 10  # For parallel processing
+  sequential: false  # Set to true for sequential processing
+  retry_attempts: 3
+  retry_delay_seconds: 5
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_file: "logs/pipeline.log"
+  console: true

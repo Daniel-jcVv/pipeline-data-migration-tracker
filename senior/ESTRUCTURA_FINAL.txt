@@ -1,0 +1,146 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  ✅ ESTRUCTURA LIMPIA Y ORGANIZADA                           ║
+║                     Nivel Intermedio - Portfolio Ready                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📁 ESTRUCTURA PRINCIPAL (LO QUE IMPORTA)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+data-migration/
+│
+├── 📦 src/                          ⭐ CÓDIGO PRINCIPAL
+│   ├── simple_sftp.py              5 funciones SFTP
+│   ├── simple_file_tracker.py      6 funciones tracking
+│   └── __init__.py
+│
+├── 🚀 run_migration.py             ⭐ PIPELINE COMPLETO (150 líneas)
+│
+├── 📊 data/                         Datos de prueba
+│   ├── orders_data.csv
+│   ├── inventory_data.json
+│   └── returns_data.xlsx
+│
+├── 📓 notebooks/
+│   └── medallion-architecture.ipynb
+│
+├── 📚 notes/
+│   └── context/
+│       └── INTERVIEW_PREP.md        ⭐ Preparación entrevista
+│
+├── 📝 README.md                     ⭐ DOC PRINCIPAL
+├── 📋 FINAL_SIMPLE_VERSION.md      ⭐ GUÍA PRESENTACIÓN
+├── 📦 requirements.txt              Solo 3 librerías
+│
+└── 🎓 senior/                       ⚠️ ARCHIVADO (NO USAR)
+    └── (versión avanzada)           Solo para referencia
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⭐ ARCHIVOS CLAVE (Lee en este orden)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1️⃣  README.md                     Documentación principal
+  2️⃣  run_migration.py              Pipeline completo
+  3️⃣  src/simple_file_tracker.py   File tracking (LO MÁS IMPORTANTE)
+  4️⃣  src/simple_sftp.py            Conexión SFTP
+  5️⃣  INTERVIEW_PREP.md             Preguntas/respuestas
+  6️⃣  FINAL_SIMPLE_VERSION.md      Guía de presentación
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 COMPARACIÓN: Antes vs Ahora
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ANTES (Desorganizado):
+    ❌ Código senior mezclado con intermedio
+    ❌ 1,600 líneas de código complejo
+    ❌ 12 módulos diferentes
+    ❌ 3 clases abstractas
+    ❌ Difícil de navegar
+    ❌ No creíble nivel intermedio
+
+  AHORA (Limpio):
+    ✅ Código intermedio en raíz
+    ✅ 400 líneas de código claro
+    ✅ 3 archivos principales
+    ✅ 0 clases (solo funciones)
+    ✅ Fácil de navegar
+    ✅ Creíble y defendible
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 CÓMO EMPEZAR (30 minutos)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Leer README.md                  (10 min)
+  2. Leer run_migration.py           (10 min)
+  3. Leer INTERVIEW_PREP.md          (10 min)
+
+  ✅ Ya estás listo para mostrar el proyecto!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  CARPETA senior/ - NO TOCAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  La carpeta senior/ contiene:
+    - Versión avanzada del proyecto
+    - Código nivel senior/arquitecto
+    - Clases abstractas y patrones complejos
+
+  ⚠️  NO LA USES para tu portfolio
+  ✅  Enfócate SOLO en la raíz del proyecto
+
+  Razón: Es demasiado compleja para nivel intermedio
+         y no es creíble que la hiciste solo.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ CHECKLIST FINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Estructura:
+    ✅ Código simple en raíz (src/, run_migration.py)
+    ✅ Código complejo archivado (senior/)
+    ✅ Documentación clara (README.md)
+    ✅ Preparación entrevista (INTERVIEW_PREP.md)
+
+  Código:
+    ✅ Solo funciones (no clases complejas)
+    ✅ Bien comentado
+    ✅ Fácil de entender
+    ✅ Nivel intermedio apropiado
+
+  Profesional:
+    ✅ README completo
+    ✅ Preguntas/respuestas preparadas
+    ✅ LinkedIn post listo
+    ✅ Elevator pitch preparado
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 LO MÁS IMPORTANTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Tu proyecto es SIMPLE por diseño, no por falta de habilidad.
+
+  Demuestra:
+    ✓ Comprensión de conceptos fundamentales
+    ✓ Capacidad de escribir código claro
+    ✓ Solución efectiva a problema real
+    ✓ File tracking (concepto clave)
+    ✓ Idempotencia (crítico en producción)
+
+  NO necesitas:
+    ✗ Clases abstractas complejas
+    ✗ Frameworks pesados
+    ✗ Arquitecturas over-engineered
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                        ✅ PROYECTO LISTO Y ORGANIZADO
+
+                Simple | Claro | Defendible | Nivel Intermedio
+                          ¡Todo está en su lugar!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

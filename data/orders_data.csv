@@ -1,0 +1,16 @@
+Order_ID,cust_id,Product_Name,Qty,Order_Date,Order_Amount$,Delivery_Status,Payment_Mode,Ship_Address,Email,Promo_Code,Feedback_Score
+1001,C001,Apple iPhone13,one,2023/06/12,$799.0,delivered,CreditCard,"221B, baker st. , london",john.doe@@gmail..com,NEW2023,5
+1002,C_002,samsung Galaxy s21,,12-07-2023,$1200,Delivered,PayPal,Noida #Sector21,,Summer2023,
+1003,C003,,3,2023.07.15,,Pending,DEBIT card,"123, main street",jane_doe#email.com,,
+1004,C004,Oneplus Nord,ONE,15/07/2023,499 USD,delivrd,upi,   mumbai  ,peter.parker@marvel,SAVE20,NaN
+1005,,Nokia 3310,1,07-20-2023,₹49,Delivered,Credit card,Delhi#4,bruce.wayne@wayne.com,,10
+1006,C006,Xiaomi  note 12 pro,02,07.21.2023,$899.99,pending,,,,DISCOUNT50,8
+1007,C007,Vivo V25,3,,375.0,,Credit_Card,chennai,clarkkent.gmail.com,,2.5
+1008,C008,,4,2023/13/07,899.1 INR,DELIVERD,UPI,New Delhi,batman@wayne,,bad
+1009,C009,"iPhone, 14 Pro Max",1,July 20th 2023,$1099,On The Way,CREDIT card,Gotham City,joker#laugh.com,LAUGH10,
+1010,C010,Motorola Edge-40,NaN,2023.07.25,USD 550,OnHold,,N/A,bruce@,,
+1011,C011,LG Velvet,2,2023/06/18,₹35000,Deliverd,paypal,pune#city,lguser@@example,VELVET25,6
+1012,C012,Realme X50,,06-07-2023,USD 399,pending,Credit Card,sector-56 gurgaon,realme@site,SAVE10,4
+1013,C013,Asus ROG Phone,Three,2023.07.10,Rs.59999,Delivered,cash,bangalore!,rog@@phone,,9
+1014,C014,Google Pixel 6a,1,07/15/2023,$449,Cancelled,debit,Hyderabad$,pixel@google,PIXELNEW,7
+1015,C015,Sony Xperia 5,2,15-07-2023,Rs 65000,Delivering,credit,coimbatore@,sony@xperia,,
