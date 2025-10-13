@@ -109,7 +109,9 @@ Desktop.ini
 # notes
 notes/
 *.md
+*.txt
 
-# another files
-senior/
+
+
+
 
