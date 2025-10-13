@@ -1,28 +1,45 @@
-#!/usr/bin/env python3
 """
 Data Migration Pipeline to Microsoft Fabric
-============================================
 
 This script implements the complete migration flow:
 1. Connect to SFTP (data source)
-2. List available CSV files
+2. List available files
 3. Check which ones have already been processed (file tracker)
 4. Download only new files
 5. Mark as processed
 
-Author: [Your name]
-Level: Intermediate
-Project: Data Migration to Microsoft Fabric
 """
 
 import sys
 import os
+from dotenv import load_dotenv
 
-# Import our simple modules
-from src.simple_sftp import (
+# Load environment variables from .env file
+load_dotenv()
+
+# credentials from .env
+config = {
+    'sftp': {
+        'host': os.getenv('SFTP_HOST'),
+        'username': os.getenv('SFTP_USERNAME'),
+        'password': os.getenv('SFTP_PASSWORD'),
+        'remote_path': os.getenv('SFTP_REMOTE_PATH') 
+    },
+    'destination': {
+        'lakehouse_path': os.getenv('LAKEHOUSE_PATH')
+    },
+    'tracker': {
+        'db_path': os.getenv('TRACKER_DB_PATH')
+    }
+}
+
+
+
+# Import modules
+from src.sftp_connector_sv import (
     connect_to_sftp, list_csv_files, download_file, close_connection
 )
-from src.simple_file_tracker import (
+from src.file_tracker_sv import (
     init_tracker,
     get_processed_files,
     filter_unprocessed_files,
@@ -62,11 +79,11 @@ def run_migration_pipeline(config, dry_run=False):
     print_header()
 
     if dry_run:
-        print("🔍 DRY-RUN MODE: Only showing what would be done\n")
+        print("DRY-RUN MODE: Only showing what would be done\n")
 
-    # ========================================
-    # STEP 1: Connect to SFTP
-    # ========================================
+    
+    # Step 1: Connect to SFTP
+    
     print("STEP 1: Connecting to SFTP server...")
     print("-" * 70)
 
@@ -77,7 +94,7 @@ def run_migration_pipeline(config, dry_run=False):
     )
 
     if not sftp:
-        print("✗ Could not connect to SFTP. Aborting.")
+        print("Could not connect to SFTP. Aborting.")
         return stats
 
     print()
@@ -85,20 +102,20 @@ def run_migration_pipeline(config, dry_run=False):
     # ========================================
     # STEP 2: List files on SFTP
     # ========================================
-    print("STEP 2: Listing CSV files on server...")
+    print("STEP 2: Listing files on server...")
     print("-" * 70)
 
     all_files = list_csv_files(sftp, config['sftp']['remote_path'])
     stats['total_files'] = len(all_files)
 
     if not all_files:
-        print("⚠ No CSV files found")
+        print("No CSV files found")
         close_connection(sftp)
         return stats
 
     print("\nFiles found:")
     for f in all_files:
-        print(f"  📄 {f['name']} - {f['size']:,} bytes")
+        print(f"  {f['name']} - {f['size']:,} bytes")
 
     print()
 
@@ -115,7 +132,7 @@ def run_migration_pipeline(config, dry_run=False):
     if processed_files:
         print("\nAlready processed files:")
         for filename in processed_files:
-            print(f"  ✓ {filename}")
+            print(f"{filename}")
     else:
         print("  (none - first execution)")
 
@@ -131,7 +148,7 @@ def run_migration_pipeline(config, dry_run=False):
     stats['to_process'] = len(files_to_process)
 
     if not files_to_process:
-        print("\n🎉 All files are already processed!")
+        print("\nAll files are already processed!")
         print("   Nothing new to migrate.")
         close_connection(sftp)
         tracker_conn.close()
@@ -139,13 +156,13 @@ def run_migration_pipeline(config, dry_run=False):
 
     print("\nFiles to be processed:")
     for f in files_to_process:
-        print(f"  ⏳ {f['name']}")
+        print(f" {f['name']}")
 
     print()
 
     # If it's dry-run, stop here
     if dry_run:
-        print("🔍 DRY-RUN: Stopping here. No files were downloaded.")
+        print("DRY-RUN: Stopping here. No files were downloaded.")
         close_connection(sftp)
         tracker_conn.close()
         return stats
@@ -208,7 +225,7 @@ def run_migration_pipeline(config, dry_run=False):
     print(f"Already processed before:    {stats['already_processed']}")
     print(f"New files to process:        {stats['to_process']}")
     print(f"Successfully processed:      {stats['successfully_processed']} ✓")
-    print(f"Failed:                      {stats['failed']} ✗")
+    print(f"Failed:                      {stats['failed']}")
     print()
 
     # Tracker statistics
@@ -252,10 +269,10 @@ def main():
 
     # Exit code
     if stats['failed'] > 0:
-        print("⚠ Pipeline completed with errors")
+        print("Pipeline completed with errors")
         sys.exit(1)
     else:
-        print("✓ Pipeline completed successfully")
+        print("Pipeline completed successfully")
         sys.exit(0)
 
 

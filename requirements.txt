@@ -11,3 +11,6 @@ pandas>=2.0.0
 # Excel support
 openpyxl>=3.1.0
 
+# Environment variable support
+python-dotenv>=1.0.0
+

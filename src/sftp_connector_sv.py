@@ -1,9 +1,7 @@
 """
-Simple SFTP Connector
-=====================
+SFTP Connector
 
 Connects to SFTP server and lists/downloads CSV files.
-Intermediate level - without using complex abstract classes.
 """
 
 import paramiko
