@@ -1,9 +1,7 @@
 """
-Simple SFTP Connector
-=====================
+SFTP Connector
 
 Connects to SFTP server and lists/downloads CSV files.
-Intermediate level - without using complex abstract classes.
 """
 
 import paramiko
@@ -35,11 +33,11 @@ def connect_to_sftp(host, username, password, port=22):
         )
         sftp = ssh.open_sftp()
 
-        print(f"✓ Connected to SFTP: {host}")
+        print(f"Connected to SFTP: {host}")
         return sftp
 
     except Exception as e:
-        print(f"✗ Error connecting to SFTP: {e}")
+        print(f"Error connecting to SFTP: {e}")
         return None
 
 
@@ -96,11 +94,11 @@ def download_file(sftp_client, remote_path, local_path):
 
         # Download file
         sftp_client.get(remote_path, local_path)
-        print(f"✓ Downloaded: {os.path.basename(remote_path)}")
+        print(f"Downloaded: {os.path.basename(remote_path)}")
         return True
 
     except Exception as e:
-        print(f"✗ Error downloading file: {e}")
+        print(f"Error downloading file: {e}")
         return False
 
 
@@ -109,7 +107,7 @@ def close_connection(sftp_client):
     try:
         if sftp_client:
             sftp_client.close()
-            print("✓ SFTP connection closed")
+            print("SFTP connection closed")
     except:
         pass
 
@@ -118,12 +116,18 @@ def close_connection(sftp_client):
 # Usage example
 # ============================================
 if __name__ == '__main__':
-    # Configuration
+    import os
+    from dotenv import load_dotenv
+
+    # Load credentials from .env
+    load_dotenv()
+
+    # Configuration from environment variables
     config = {
-        'host': 'localhost',
-        'username': 'fabricdata',
-        'password': 'FabricMigration2025!',
-        'remote_path': '/migration-files/csv/'
+        'host': os.getenv('SFTP_HOST'),
+        'username': os.getenv('SFTP_USERNAME'),
+        'password': os.getenv('SFTP_PASSWORD'),
+        'remote_path': os.getenv('SFTP_REMOTE_PATH')
     }
 
     # 1. Connect

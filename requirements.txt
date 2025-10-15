@@ -1,13 +1,26 @@
 
-# aws S3 conector
-boto3>=1.26.0
-
 # SFTP Connection
 paramiko>=3.0.0
 
-# Data Processing
-pandas>=2.0.0
+# Environment variable support
+python-dotenv>=1.0.0
 
-# Excel support
-openpyxl>=3.1.0
+# Microsoft Fabric / Azure Integration
+azure-identity>=1.15.0
+azure-storage-file-datalake>=12.14.0
 
+# Retry logic
+tenacity>=8.2.0
+
+# testing
+pytest==7.4.0
+pytest-cov==4.1.0
+pytest-mock==3.11.1
+
+# Code Quality
+black==23.7.0
+flake8==6.1.0
+pylint==2.17.5
+
+# Type Checking
+mypy==1.5.1

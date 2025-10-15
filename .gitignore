@@ -30,6 +30,7 @@ ENV/
 env.bak/
 venv.bak/
 .venv/
+.env
 
 # IDEs
 .vscode/
@@ -71,12 +72,12 @@ temp/
 *.tmp
 
 # Data Files (if you don't want to commit large data files)
-# Uncomment the lines below if data files should not be committed
-# data/*.csv
-# data/*.json
-# data/*.xlsx
-# data/*.parquet
-data/lakehouse/
+data/fabric-mock
+data/raw
+data/processed/bronze
+data/metadata
+
+
 
 # Test Coverage
 .coverage
@@ -84,14 +85,17 @@ htmlcov/
 .pytest_cache/
 .tox/
 
+
 # MyPy
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
+
 # Fabric Artifacts
 *.pbix
 *.pbit
+
 
 # OS Files
 Thumbs.db
@@ -100,7 +104,7 @@ Desktop.ini
 # Backup Files
 *.bak
 *.backup
-*~
+
 
 # Compiled Files
 *.pyc
@@ -110,6 +114,8 @@ Desktop.ini
 notes/
 *.md
 *.txt
+senior/
+
 
 
 
