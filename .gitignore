@@ -72,13 +72,11 @@ temp/
 *.tmp
 
 # Data Files (if you don't want to commit large data files)
-data/*.csv
-data/*.json
-data/*.xlsx
-data/*.parquet
-data/*.sqlite
-data/*.db
-data/lakehouse/
+data/fabric-mock
+data/raw
+data/processed/bronze
+data/metadata
+
 
 
 # Test Coverage
