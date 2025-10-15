@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Paramiko](https://img.shields.io/badge/SFTP-Paramiko-green?logo=ssh&logoColor=white)](https://www.paramiko.org/)
 [![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Pandas](https://img.shields.io/badge/Data-Pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![Microsoft Fabric](https://img.shields.io/badge/Platform-Microsoft%20Fabric-0078D4?logo=microsoft&logoColor=white)](https://fabric.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -137,7 +136,7 @@ This project implements an **idempotent ETL pipeline** using a SQLite-based file
 - **Microsoft Fabric**: Cloud data platform (Lakehouse + Warehouse)
 
 ### Architecture Pattern
-- **ETL Pipeline**: Extract (SFTP) --> Transform (Pandas) --> Load (Fabric)
+- **ETL Pipeline**: Extract (SFTP) --> Transform (PySpark) --> Load (Fabric)
 - **Medallion Architecture**: Bronze --> Silver--> Gold layers
 - **Idempotent Design**: Safe to re-execute multiple times
 - **State Management**: Persistent tracking with SQLite
@@ -152,7 +151,7 @@ data-migration/
 │   ├── sftp_connector_sv.py        # SFTP operations (5 functions)
 │   └── file_tracker_sv.py          # State management (6 functions)
 │
-├── run_migration.py                # 🚀 Main pipeline orchestrator
+├── run_migration.py                # Main pipeline orchestrator
 ├── requirements.txt                # Python dependencies
 ├── .env                            # Configuration (not in repo)
 │
@@ -391,45 +390,35 @@ Each module has a single responsibility: SFTP operations, state tracking, and or
 - [ ] Unit tests with pytest
 - [ ] Integration tests
 - [ ] CI/CD with GitHub Actions
-- [ ] Docker containerization
-- [ ] Kubernetes deployment manifests
-
 
 
 ---
 
-## 🎓 Learning Resources
+## 📞 Contact Information
 
+**Daniel García Belman**  
+*Data Engineer | ETL Developer | Big Data*
 
+| Platform | Link |
+|----------|------|
+| **Email** | [daniel_ys1@outlook.com](mailto:daniel_ys1@outlook.com) |
+| **LinkedIn** | [Daniel García Belman](https://www.linkedin.com/in/daniel-garcía-belman-99a298aae) |
+| **GitHub** | [@Daniel-jcVv](https://github.com/Daniel-jcVv) |
+| **Location** | Celaya, Guanajuato, Mexico 🇲🇽 |
+|              | Querétaro, Querétaro, Mexico 🇲🇽 |
+| **Portfolio**| [Portfolio Website](https:/danieljcvv-portfolio.vercel.app/)
+
+---
+
+## 📚 Resources
+
+- [Microsoft Fabric Docs](https://learn.microsoft.com/en-us/fabric/)
 - [Fabric Lakehouse Management](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-api)
 - [OneLake Access API](https://learn.microsoft.com/en-us/fabric/onelake/onelake-access-api)
 - [ETL Pipeline Patterns](https://learn.microsoft.com/en-us/fabric/data-engineering/load-data-lakehouse)
-
----
-
-## 👤 Author
-
-**Daniel Garcia Belman**  
-Data Engineer | Python Developer | Cloud Solutions Architect
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?logo=linkedin&logoColor=white)](https://linkedin.com/in/your-profile)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?logo=github&logoColor=white)](https://github.com/your-username)
-[![Email](https://img.shields.io/badge/Email-Contact-D14836?logo=gmail&logoColor=white)](mailto:daniel_ys1@outlook.com)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
+- [PySpark Documentation](https://spark.apache.org/docs/latest/api/python/)
 
 
-Special thanks to God 
-Microsoft Fabric community for documentation and support during development.
 
----
 
 
