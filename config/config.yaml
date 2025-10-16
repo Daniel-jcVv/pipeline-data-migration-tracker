@@ -10,23 +10,16 @@ file_tracker:
 source_sftp:
   host: "localhost"
   port: 22
-  username: "fabricdata"
-  password: "fabric-migration25"
-  path: "/migration-files/csv/"
+  username: "fabric"
+  password: "password"
+  path: "path/migration-files/"
   timeout: 30
 
-# source configuration (AWS S3)
-source_s3:
-  bucket_name: "fabric-migration-data"
-  aws_access_key_id: "YOUR_ACCESS_KEY"
-  aws_secret_access_key: "YOUR_SECRET_KEY"
-  region_name: "us-east-1"
-  path: "migration-data/csv/"
 
 # Destination configuration
 destination:
   # Local simulation of Lakehouse
-  lakehouse_path: "data/lakehouse/bronze/"
+  lakehouse_path: "data/lakehouse/migration/"
 
   # Fabric lakehouse (for actual deployment)
   fabric_lakehouse:
@@ -41,12 +34,12 @@ destination:
     table: "dim_product"
 
 # Pipeline configuration
-pipeline:
-  file_pattern: "*.csv"
-  batch_size: 10  # For parallel processing
-  sequential: false  # Set to true for sequential processing
-  retry_attempts: 3
-  retry_delay_seconds: 5
+#pipeline:
+#  file_pattern: "*.csv"
+#  batch_size: 10  # For parallel processing
+#  sequential: false  # Set to true for sequential processing
+#  retry_attempts: 3
+#  retry_delay_seconds: 5
 
 # Logging Configuration
 logging:

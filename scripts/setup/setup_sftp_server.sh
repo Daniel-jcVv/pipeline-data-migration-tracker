@@ -45,7 +45,7 @@ echo -e "\n${GREEN}[1/7] Installing OpenSSH Server...${NC}"
 if ! dpkg -l | grep -q openssh-server; then
     sudo apt update
     sudo apt install -y openssh-server
-    echo -e "${GREEN}✓ OpenSSH Server installed${NC}"
+    echo -e "${GREEN} OpenSSH Server installed${NC}"
 else
     echo -e "${YELLOW}  OpenSSH Server already installed${NC}"
 fi
@@ -57,7 +57,7 @@ if id "${SFTP_USER}" &>/dev/null; then
 else
     sudo useradd -m -d /home/${SFTP_USER} -s /bin/bash ${SFTP_USER}
     echo "${SFTP_USER}:${SFTP_PASSWORD}" | sudo chpasswd
-    echo -e "${GREEN}✓ User ${SFTP_USER} created${NC}"
+    echo -e "${GREEN} User ${SFTP_USER} created${NC}"
 fi
 
 # 3. create data directory structure
@@ -73,20 +73,16 @@ if [ -d "$PROJECT_DATA_DIR" ]; then
     # Copy CSV files
     if [ -f "$PROJECT_DATA_DIR/orders_data.csv" ]; then
         sudo cp "$PROJECT_DATA_DIR/orders_data.csv" "${DATA_DIR}/csv/"
-        echo -e "${GREEN}  ✓ Copied orders_data.csv${NC}"
+        echo -e "${GREEN}   Copied orders_data.csv${NC}"
     fi
     
-    # copy JSON files
-    if [ -f "$PROJECT_DATA_DIR/inventory_data.json" ]; then
-        sudo cp "$PROJECT_DATA_DIR/inventory_data.json" "${DATA_DIR}/json/"
-        echo -e "${GREEN}copied inventory_data.json${NC}"
-    fi
+    
     
     # Copy excel files
-    if [ -f "$PROJECT_DATA_DIR/returns_data.xlsx" ]; then
-        sudo cp "$PROJECT_DATA_DIR/returns_data.xlsx" "${DATA_DIR}/excel/"
-        echo -e "${GREEN}  copied returns_data.xlsx${NC}"
-    fi
+    #if [ -f "$PROJECT_DATA_DIR/returns_data.xlsx" ]; then
+    #    sudo cp "$PROJECT_DATA_DIR/returns_data.xlsx" "${DATA_DIR}/excel/"
+    #    echo -e "${GREEN}  copied returns_data.xlsx${NC}"
+    #fi
     
     sudo chown -R ${SFTP_USER}:${SFTP_USER} ${DATA_DIR}
     echo -e "${GREEN}sample data files copied${NC}"
@@ -123,7 +119,7 @@ sudo systemctl restart sshd
 sudo systemctl enable sshd
 echo -e "${GREEN} SSH service restarted and enabled${NC}"
 
-# 7. Test SFTP connection
+# 7. test SFTP connection
 echo -e "\n${GREEN}[7/7] Testing SFTP connection...${NC}"
 HOSTNAME=$(hostname -I | awk '{print $1}')
 
@@ -142,9 +138,9 @@ fi
 rm -f /tmp/sftp_test.sh
 
 # Display summary
-echo -e "\n${GREEN} ========================================${NC}"
-echo -e "${GREEN}  SFTP Server Setup Complete!${NC}"
-echo -e "${GREEN}==========================================${NC}\n"
+echo -e "\n${GREEN} ============================================${NC}"
+echo -e "${GREEN}  SFTP Server setup complete${NC}"
+echo -e "${GREEN}==============================================${NC}\n"
 
 echo -e "${BLUE}Connection details for microsoft fabric:${NC}"
 echo -e "  Host: ${HOSTNAME} (or localhost)"
@@ -153,10 +149,10 @@ echo -e "  Username: ${SFTP_USER}"
 echo -e "  Password: ${SFTP_PASSWORD}"
 echo -e "  Data Path: /migration-files/"
 echo ""
-echo -e "${BLUE}Directory Structure:${NC}"
+echo -e "${BLUE}Directory structure:${NC}"
 echo -e "  ${DATA_DIR}/csv/      - CSV files"
-echo -e "  ${DATA_DIR}/json/     - JSON files"
-echo -e "  ${DATA_DIR}/excel/    - Excel files"
+#echo -e "  ${DATA_DIR}/json/     - JSON files"
+#echo -e "  ${DATA_DIR}/excel/    - Excel files"
 echo -e "  ${DATA_DIR}/processed/ - Processed files"
 echo ""
 echo -e "${YELLOW} Security notes:${NC}"
@@ -172,5 +168,5 @@ echo ""
 echo -e "${BLUE}Next steps:${NC}"
 echo -e "  1. Test SFTP connection manually"
 echo -e "  2. Configure Microsoft Fabric connector"
-echo -e "  3. See setup-sftp-server.md for fabric setup instructions"
+
 echo ""
