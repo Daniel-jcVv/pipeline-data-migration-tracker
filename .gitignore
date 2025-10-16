@@ -57,7 +57,7 @@ logs/
 *.db
 *.sqlite
 *.sqlite3
-data/migration.db
+
 
 # Credentials
 credentials.json
@@ -71,12 +71,10 @@ tmp/
 temp/
 *.tmp
 
-# Data Files (if you don't want to commit large data files)
-data/fabric-mock
-data/raw
-data/processed/bronze
-data/metadata
-
+# Data Files 
+data/bronze
+data/silver
+.sample-data/
 
 
 # Test Coverage
@@ -84,12 +82,6 @@ data/metadata
 htmlcov/
 .pytest_cache/
 .tox/
-
-
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
 
 
 # Fabric Artifacts
@@ -106,18 +98,9 @@ Desktop.ini
 *.backup
 
 
-# Compiled Files
-*.pyc
-*.pyo
-
 # notes
 notes/
 *.md
 *.txt
-senior/
-
-
-
-
 
 
