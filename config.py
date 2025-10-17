@@ -20,10 +20,12 @@ TRACKER_DB_PATH = Path(os.getenv("TRACKER_DB_PATH", "data/metadata/file_tracker.
 # Azure/Fabric
 FABRIC_WORKSPACE_ID = os.getenv("FABRIC_WORKSPACE_ID")
 FABRIC_LAKEHOUSE_ID = os.getenv("FABRIC_LAKEHOUSE_ID")
+FABRIC_LAKEHOUSE_NAME = os.getenv("FABRIC_LAKEHOUSE_NAME", "migration_lakehouse")
+FABRIC_BASE_PATH = os.getenv("FABRIC_BASE_PATH", "migration")  # Base folder in Files/
 AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID")
 AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET")
 AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID")
 
 # Mock mode
-MOCK_FABRIC = os.getenv("MOCK_FABRIC", "false").lower() == "true"
-MOCK_FABRIC_PATH = Path(os.getenv("MOCK_FABRIC_PATH", "data/fabric-mock"))
+# MOCK_FABRIC = os.getenv("MOCK_FABRIC", "false").lower() == "true"
+# MOCK_FABRIC_PATH = Path(os.getenv("MOCK_FABRIC_PATH", "data/fabric-mock"))

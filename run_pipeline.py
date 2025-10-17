@@ -1,20 +1,22 @@
 """Main pipeline orchestrator."""
 import logging
-from src.ingestion import init_tracker_db, download_from_sftp, mark_as_processed
-from src.transformations import process_bronze_to_silver
+from src.ingestion import init_tracker_db, download_from_sftp
 from src.fabric_client import upload_to_fabric
+from src.utils.file_tracker import FileTracker, FileStatus
+import config
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+tracker = FileTracker(config.TRACKER_DB_PATH)
+
 def run_pipeline():
-    """Execute ETL pipeline: SFTP -> Bronze -> Silver -> Fabric."""
+    """Execute ETL pipeline: SFTP → Bronze → Fabric."""
     logger.info("Starting pipeline...")
     
-    # Initialize tracker
     init_tracker_db()
     
-    # Step 1: Download new files from SFTP server
+    # Download new files to bronze
     new_files = download_from_sftp()
     logger.info(f"Downloaded {len(new_files)} new files")
     
@@ -22,25 +24,28 @@ def run_pipeline():
         logger.info("No new files to process")
         return
     
-    # Step 2: Process each file
+    # Upload each bronze file to Fabric
     for filename in new_files:
         logger.info(f"Processing {filename}...")
         
         try:
-            # Transform Bronze -> Silver
-            silver_path = process_bronze_to_silver(filename)
-            logger.info(f"Transformed to {silver_path}")
+            bronze_path = config.LOCAL_BRONZE_PATH / filename
+            fabric_dest = f"migration/bronze/{filename}"
             
-            # Upload to Fabric
-            fabric_dest = f"silver/{silver_path.name}"
-            upload_to_fabric(silver_path, fabric_dest)
+            upload_to_fabric(bronze_path, fabric_dest)
             logger.info(f"Uploaded to Fabric: {fabric_dest}")
             
-            # Mark as processed
-            mark_as_processed(filename)
+            # Mark as complete
+            file_size = bronze_path.stat().st_size
+            tracker.update_status(
+                filename,
+                FileStatus.MEDALLION_COMPLETE,
+                file_size=file_size
+            )
             
         except Exception as e:
             logger.error(f"Failed to process {filename}: {e}")
+            tracker.mark_failed(filename, str(e))
             continue
     
     logger.info("Pipeline completed")

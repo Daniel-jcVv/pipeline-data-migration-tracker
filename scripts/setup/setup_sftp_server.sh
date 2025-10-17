@@ -26,8 +26,8 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 # variables - CUSTOMIZE THESE
-SFTP_USER="fabricdata"
-SFTP_PASSWORD="fabric-migration25"  # CHANGE THIS IN PRODUCTION!!!!!!
+SFTP_USER="fabric"
+SFTP_PASSWORD="mypass777"  # CHANGE THIS IN PRODUCTION!!!!!!
 DATA_DIR="/home/${SFTP_USER}/migration-files"
 SSH_PORT=22  # default SSH port
 PROJECT_DATA_DIR="$(dirname "$(dirname "$(dirname "$(readlink -f "$0")")")")/data"

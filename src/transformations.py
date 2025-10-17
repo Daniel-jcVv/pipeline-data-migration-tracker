@@ -32,7 +32,7 @@ def clean_data(df: DataFrame) -> DataFrame:
 
 def process_bronze_to_silver(filename: str) -> Path:
     """
-    Transform bronze CSV to clean silver parquet.
+    Transform bronze CSV to clean silver CSV.
     Updates tracker state to SILVER_CLEANED on success.
     """
     logger.info(f"Transforming {filename}...")
@@ -47,10 +47,20 @@ def process_bronze_to_silver(filename: str) -> Path:
         rows_after = df_clean.count()
         logger.info(f"Cleaned: {rows_before} → {rows_after} rows")
         
-        # Write silver parquet
-        silver_path = config.LOCAL_SILVER_PATH / filename.replace(".csv", ".parquet")
+        # Write silver CSV (single file for Fabric upload)
+        silver_path = config.LOCAL_SILVER_PATH / filename
         silver_path.parent.mkdir(parents=True, exist_ok=True)
-        df_clean.write.mode("overwrite").parquet(str(silver_path))
+        df_clean.coalesce(1).write.mode("overwrite").csv(
+            str(silver_path.parent / f"{filename}.tmp"),
+            header=True
+        )
+        
+        # Move the part file to final name
+        import glob
+        part_file = glob.glob(str(silver_path.parent / f"{filename}.tmp/part-*.csv"))[0]
+        import shutil
+        shutil.move(part_file, silver_path)
+        shutil.rmtree(silver_path.parent / f"{filename}.tmp")
         
         # Update tracker
         tracker.update_status(
