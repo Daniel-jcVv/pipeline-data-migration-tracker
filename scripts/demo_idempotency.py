@@ -33,7 +33,7 @@ def simulate_partial_failure():
         print(f"  {status}: {count}")
 
     # Count completed
-    cursor.execute("SELECT COUNT(*) FROM file_status WHERE status='MEDALLION_COMPLETE'")
+    cursor.execute("SELECT COUNT(*) FROM file_status WHERE status='COMPLETED'")
     completed = cursor.fetchone()[0] # number of completed files
 
     # Ensure at least 40 completed files exist
@@ -43,7 +43,7 @@ def simulate_partial_failure():
         return
 
     # Mark 8 files as FAILED to simulate partial failure
-    # Update only files with MEDALLION_COMPLETE status
+    # Update only files with COMPLETED status
     cursor.execute("""
         UPDATE file_status
         SET status = 'FAILED',
@@ -51,7 +51,7 @@ def simulate_partial_failure():
             last_updated = CURRENT_TIMESTAMP
         WHERE file_name IN (
             SELECT file_name FROM file_status
-            WHERE status = 'MEDALLION_COMPLETE'
+            WHERE status = 'COMPLETED'
             LIMIT 8
         )
     """)

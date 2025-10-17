@@ -1,8 +1,7 @@
 """
 File Tracker - State management for idempotent data pipeline.
 
-Implements Medallion Architecture state tracking with SQLite backend.
-Prevents reprocessing of files across Bronze → Silver → Gold transformations.
+Prevents reprocessing of files during SFTP to Fabric migration.
 """
 import sqlite3
 import logging
@@ -18,10 +17,8 @@ logger = logging.getLogger(__name__)
 class FileStatus(Enum):
     """Pipeline processing states."""
     PENDING = "PENDING"
-    BRONZE_LOADED = "BRONZE_LOADED"
-    SILVER_CLEANED = "SILVER_CLEANED"
-    GOLD_AGGREGATED = "GOLD_AGGREGATED"
-    MEDALLION_COMPLETE = "MEDALLION_COMPLETE"
+    DOWNLOADED = "DOWNLOADED"
+    COMPLETED = "COMPLETED"
     FAILED = "FAILED"
 
 
@@ -134,7 +131,7 @@ class FileTracker:
     def get_pending_files(self, available_files: List[str]) -> List[str]:
         """
         Filter files that need processing.
-        
+
         Returns files that are:
         - Not in tracker (new files)
         - Status = PENDING or FAILED
@@ -142,11 +139,11 @@ class FileTracker:
         with self._get_connection() as conn:
             tracked = conn.execute(
                 "SELECT file_name FROM file_status WHERE status = ?",
-                (FileStatus.MEDALLION_COMPLETE.value,)
+                (FileStatus.COMPLETED.value,)
             ).fetchall()
-            
+
             completed = {row['file_name'] for row in tracked}
-        
+
         pending = [f for f in available_files if f not in completed]
         logger.info(f"Pending files: {len(pending)}/{len(available_files)}")
         return pending
