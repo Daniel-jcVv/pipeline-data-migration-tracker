@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![Paramiko](https://img.shields.io/badge/SFTP-Paramiko-green?logo=ssh&logoColor=white)](https://www.paramiko.org/)
 [![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-[![Pandas](https://img.shields.io/badge/Data-Pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![Microsoft Fabric](https://img.shields.io/badge/Platform-Microsoft%20Fabric-0078D4?logo=microsoft&logoColor=white)](https://fabric.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -21,14 +20,6 @@ Execution 1: Processing 50 files... ❌ Fails at file #30
 Execution 2: Reprocesses ALL 50 files (including 29 already migrated)
 Result: Wasted time, potential duplicates, inefficient resource usage
 ```
-
-### ✅ With Intelligent File Tracking
-```
-Execution 1: Processing 50 files... ❌ Fails at file #30
-Execution 2: Skips 29 processed files, continues from #30
-Result: Zero reprocessing, guaranteed idempotency, optimized pipeline
-```
-
 ---
 
 ## 💡 Solution Architecture
@@ -66,6 +57,15 @@ This project implements an **idempotent ETL pipeline** using a SQLite-based file
     │ ❌ Wasted time     │
     └────────────────────┘
 ```
+
+
+### ✅ With Intelligent File Tracking
+```
+Execution 1: Processing 50 files... ❌ Fails at file #30
+Execution 2: Skips 29 processed files, continues from #30
+Result: Zero reprocessing, guaranteed idempotency, optimized pipeline
+```
+
 
 #### After: Smart Migration (Optimized)
 ```
@@ -133,12 +133,9 @@ This project implements an **idempotent ETL pipeline** using a SQLite-based file
 - **Python 3.8+**: Main orchestration language
 - **Paramiko**: SFTP client for secure file transfer
 - **SQLite**: Lightweight database for state management
-- **Pandas**: Data transformation and validation
 - **Microsoft Fabric**: Cloud data platform (Lakehouse + Warehouse)
 
 ### Architecture Pattern
-- **ETL Pipeline**: Extract (SFTP) --> Transform (Pandas) --> Load (Fabric)
-- **Medallion Architecture**: Bronze --> Silver--> Gold layers
 - **Idempotent Design**: Safe to re-execute multiple times
 - **State Management**: Persistent tracking with SQLite
 
@@ -147,21 +144,59 @@ This project implements an **idempotent ETL pipeline** using a SQLite-based file
 ## 📁 Project Structure
 
 ```
-data-migration/
+fabric-data-migration/
 ├── src/
-│   ├── sftp_connector_sv.py        # SFTP operations (5 functions)
-│   └── file_tracker_sv.py          # State management (6 functions)
-│
-├── run_migration.py               # Main pipeline orchestrator
-├── requirements.txt               # Python dependencies
-├── .env                           # Configuration (not in repo)
-│
+│   ├── ingestion.py          # SFTP download
+│   ├── fabric_client.py      # Upload to Fabric
+│   └── file_tracker.py       # State management
+├── scripts/
+│   └── demo_idempotency.py   # Demo only
 ├── data/
-│   ├── file_tracker.db            # SQLite tracking database
-│   └── metadata/                  # Downloaded CSV files
-│
-├── 
+│   ├── staging/              # Downloaded CSVs
+│   └── tracker.db            # SQLite state
+├── run_pipeline.py
+├── config.py
+├── requirements.txt
+├── README.md
+└── .env.example
 ```
+
+
+## 🔄 PIPELINE FLOW - Update Data Flow
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ┌─────────────────┐
+  │   Data Source   │  SFTP externo (fuera del proyecto)
+  │   (50+ files)   │  Usuario: fabric / Path: data/raw/
+  └────────┬────────┘
+           │
+  ┌────────▼────────┐
+  │  Get Metadata   │  📄 src/ingestion.py
+  │   (Reader)      │  → sftp.listdir() → 50 files
+  └────────┬────────┘
+           │
+  ┌────────▼────────┐
+  │     Lookup      │  📄 src/utils/file_tracker.py
+  │   (Tracker)     │  → tracker.get_pending_files()
+  │                 │  💾 data/metadata/file_tracker.db
+  └────────┬────────┘  → 20 already MEDALLION_COMPLETE
+           │
+  ┌────────▼────────┐
+  │     Filter      │  📄 src/utils/file_tracker.py (interno)
+  │   (Filter)      │  → Retorna solo PENDING
+  └────────┬────────┘  → 30 to process
+           │
+  ┌────────▼────────┐
+  │    ForEach      │  📄 run_pipeline.py
+  │  ┌──────────┐   │  
+  │  │ Download │   │  → 📁 data/bronze/ (staging local)
+  │  │ Upload   │   │  → 📄 src/fabric_client.py
+  │  │ Track    │   │  → ☁️ Fabric: Files/migration/bronze/
+  │  └──────────┘   │  → 💾 Update tracker
+  └─────────────────┘
+
+
+
 
 ---
 
@@ -183,8 +218,8 @@ Create a `.env` file in the project root:
 SFTP_HOST=your-sftp-server.com
 SFTP_PORT=22
 SFTP_USERNAME=your_username
-SFTP_PASSWORD=your_password
-SFTP_REMOTE_PATH=/data/csv/
+SFTP_PASSWORD=your_pass
+SFTP_REMOTE_PATH=/data/your_path/...
 
 # Destination
 LAKEHOUSE_PATH=data/lakehouse/bronze/
@@ -315,17 +350,6 @@ def run_migration_pipeline(config, dry_run=False):
         mark_as_processed(tracker_conn, file_info['name'])
 ```
 
----
-
-## 📈 Data Transformations (Medallion Architecture)
-
-The pipeline implements a three-layer data architecture for progressive refinement:
-
-### Bronze Layer (Raw)
-Direct ingestion from source:
-- Preserves original data structure
-- Adds ingestion metadata (timestamp, source)
-- Stored as CSV in Fabric Lakehouse Files/migration 
 
 ---
 
@@ -407,6 +431,7 @@ Each module has a single responsibility: SFTP operations, state tracking, and or
 - [Fabric Lakehouse Management](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-api)
 - [OneLake Access API](https://learn.microsoft.com/en-us/fabric/onelake/onelake-access-api)
 - [ETL Pipeline Patterns](https://learn.microsoft.com/en-us/fabric/data-engineering/load-data-lakehouse)
+
 
 ---
 

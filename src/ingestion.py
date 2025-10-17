@@ -19,13 +19,13 @@ def init_tracker_db():
 
 def download_from_sftp() -> List[str]:
     """
-    Download new files from SFTP to local bronze folder.
-    
+    Download new files from SFTP to local staging folder.
+
     Returns:
         List of newly downloaded filenames
     """
     logger.info(f"Connecting to SFTP: {config.SFTP_HOST}:{config.SFTP_PORT}")
-    config.LOCAL_BRONZE_PATH.mkdir(parents=True, exist_ok=True)
+    config.LOCAL_STAGING_PATH.mkdir(parents=True, exist_ok=True)
     
     # Connect to SFTP
     ssh = paramiko.SSHClient()
@@ -54,15 +54,15 @@ def download_from_sftp() -> List[str]:
     for filename in pending_files:
         try:
             remote_path = f"{config.SFTP_SERVER_PATH}/{filename}"
-            local_path = config.LOCAL_BRONZE_PATH / filename
-            
+            local_path = config.LOCAL_STAGING_PATH / filename
+
             sftp.get(remote_path, str(local_path))
             file_size = local_path.stat().st_size
-            
-            # Mark as BRONZE_LOADED
+
+            # Mark as DOWNLOADED
             tracker.update_status(
                 filename,
-                FileStatus.BRONZE_LOADED,
+                FileStatus.DOWNLOADED,
                 file_size=file_size
             )
             
@@ -82,9 +82,9 @@ def download_from_sftp() -> List[str]:
 
 
 def mark_as_processed(filename: str, record_count: int = None):
-    """Mark file as fully processed (MEDALLION_COMPLETE)."""
+    """Mark file as fully processed (COMPLETED)."""
     tracker.update_status(
         filename,
-        FileStatus.MEDALLION_COMPLETE,
+        FileStatus.COMPLETED,
         record_count=record_count
     )

@@ -13,9 +13,8 @@ SFTP_PASSWORD = os.getenv("SFTP_PASSWORD")
 SFTP_SERVER_PATH = os.getenv("SFTP_SERVER_PATH", "data/raw")
 
 # Local paths
-LOCAL_BRONZE_PATH = Path(os.getenv("LOCAL_BRONZE_PATH", "data/bronze"))
-LOCAL_SILVER_PATH = Path(os.getenv("LOCAL_SILVER_PATH", "data/silver"))
-TRACKER_DB_PATH = Path(os.getenv("TRACKER_DB_PATH", "data/metadata/file_tracker.db"))
+LOCAL_STAGING_PATH = Path(os.getenv("LOCAL_STAGING_PATH", "data/staging"))
+TRACKER_DB_PATH = Path(os.getenv("TRACKER_DB_PATH", "data/tracker.db"))
 
 # Azure/Fabric
 FABRIC_WORKSPACE_ID = os.getenv("FABRIC_WORKSPACE_ID")

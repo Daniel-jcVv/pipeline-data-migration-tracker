@@ -11,35 +11,35 @@ logger = logging.getLogger(__name__)
 tracker = FileTracker(config.TRACKER_DB_PATH)
 
 def run_pipeline():
-    """Execute ETL pipeline: SFTP → Bronze → Fabric."""
+    """Execute ETL pipeline: SFTP → Staging → Fabric."""
     logger.info("Starting pipeline...")
-    
+
     init_tracker_db()
-    
-    # Download new files to bronze
+
+    # Download new files to staging
     new_files = download_from_sftp()
     logger.info(f"Downloaded {len(new_files)} new files")
-    
+
     if not new_files:
         logger.info("No new files to process")
         return
-    
-    # Upload each bronze file to Fabric
+
+    # Upload each file to Fabric
     for filename in new_files:
         logger.info(f"Processing {filename}...")
-        
+
         try:
-            bronze_path = config.LOCAL_BRONZE_PATH / filename
-            fabric_dest = f"migration/bronze/{filename}"
-            
-            upload_to_fabric(bronze_path, fabric_dest)
+            staging_path = config.LOCAL_STAGING_PATH / filename
+            fabric_dest = f"migration/{filename}"
+
+            upload_to_fabric(staging_path, fabric_dest)
             logger.info(f"Uploaded to Fabric: {fabric_dest}")
-            
+
             # Mark as complete
-            file_size = bronze_path.stat().st_size
+            file_size = staging_path.stat().st_size
             tracker.update_status(
                 filename,
-                FileStatus.MEDALLION_COMPLETE,
+                FileStatus.COMPLETED,
                 file_size=file_size
             )
             
