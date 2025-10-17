@@ -30,6 +30,7 @@ ENV/
 env.bak/
 venv.bak/
 .venv/
+.env
 
 # IDEs
 .vscode/
@@ -56,7 +57,7 @@ logs/
 *.db
 *.sqlite
 *.sqlite3
-data/migration.db
+
 
 # Credentials
 credentials.json
@@ -70,13 +71,11 @@ tmp/
 temp/
 *.tmp
 
-# Data Files (if you don't want to commit large data files)
-# Uncomment the lines below if data files should not be committed
-# data/*.csv
-# data/*.json
-# data/*.xlsx
-# data/*.parquet
-data/lakehouse/
+# Data Files 
+data/bronze
+data/silver
+.sample-data/
+
 
 # Test Coverage
 .coverage
@@ -84,14 +83,11 @@ htmlcov/
 .pytest_cache/
 .tox/
 
-# MyPy
-.mypy_cache/
-.dmypy.json
-dmypy.json
 
 # Fabric Artifacts
 *.pbix
 *.pbit
+
 
 # OS Files
 Thumbs.db
@@ -100,13 +96,8 @@ Desktop.ini
 # Backup Files
 *.bak
 *.backup
-*~
 
-# Compiled Files
-*.pyc
-*.pyo
 
-# notes
+# Notes and internal docs (not for portfolio)
 notes/
-
 
