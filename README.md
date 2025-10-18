@@ -84,7 +84,7 @@ Result: Zero reprocessing, guaranteed idempotency, optimized pipeline
     ┌────────────────────┐      ┌──────────────────┐
     │ Query file_tracker │ ←──→ │ SQLite Database  │
     │ Status: LOADED     │      │ ┌──────────────┐ │
-    └────────┬───────────┘      │ │ files 1-29   │ │
+    └────────┬───────────┘      │ │ files 1-30   │ │
              │                  │ │ Status: OK   │ │
              │                  │ └──────────────┘ │
              │                  └──────────────────┘
@@ -92,8 +92,8 @@ Result: Zero reprocessing, guaranteed idempotency, optimized pipeline
              ▼
     ┌────────────────────┐
     │ Smart Filter       │
-    │ Already done: 29   │
-    │ To process: 21     │  ✅ ONLY NEW FILES
+    │ Already done: 30   │
+    │ To process: 20     │  ✅ ONLY NEW FILES
     └────────┬───────────┘
              │
              │ Step 4: Process remaining
@@ -196,8 +196,6 @@ fabric-data-migration/
   └─────────────────┘
 
 
-
-
 ---
 
 ## 🚀 Quick Start
@@ -228,37 +226,7 @@ LAKEHOUSE_PATH=data/lakehouse/bronze/
 TRACKER_DB_PATH=data/file_tracker.db
 ```
 
-### Execution
 
-#### 1. Dry Run (Preview Mode)
-Test the pipeline without downloading files:
-```bash
-python run_migration.py --dry-run
-```
-
-**Output:**
-```
-==================================================================
-  DATA MIGRATION PIPELINE
-==================================================================
-
-STEP 1: Connecting to SFTP server...
-✓ Connected to SFTP: your-server.com
-
-STEP 2: Listing files on server...
-✓ Found 50 CSV files
-
-STEP 3: Checking already processed files...
-  Already processed: 29 files
-
-STEP 4: Filtering pending files...
-📊 Summary:
-   Total files: 50
-   Already processed: 29
-   To process: 21
-
-DRY-RUN: Stopping here. No files were downloaded.
-```
 
 #### 2. Production Run
 Execute the complete migration:
@@ -266,14 +234,31 @@ Execute the complete migration:
 python run_migration.py
 ```
 
-#### 3. Verify Idempotency
+#### 3. Test Resilience (Partial Failure Simulation)
+Simulate partial pipeline failures for testing idempotency:
+```bash
+# Process only first 30 files (simulate failure at file #31)
+python run_pipeline.py --max-files 30
+
+# Retry: processes only remaining 20 files (skips the 30 already loaded)
+python run_pipeline.py
+```
+
+**Why this matters:**
+- ✅ **Configuration over code modification** 
+- ✅ **Can automate resilience testing**
+- ✅ **Real pipelines need failure simulation**
+- ✅ **Idempotency validation (Proves files aren't reprocessed)**
+
+> "--max-files` flag for testing pipeline resilience. This allows simulating partial failures without modifying code, following the principle of configuration over code modification. In production environments, this is critical for CI/CD testing and validating idempotent behavior."
+
+#### 4. Verify Idempotency
 Run again to confirm no reprocessing:
 ```bash
-python run_migration.py
+python run_pipeline.py
 
 # Output:
-# All files are already processed!
-# Nothing new to migrate.
+# No new files to process
 ```
 
 ---
