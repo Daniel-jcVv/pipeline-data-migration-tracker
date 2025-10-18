@@ -18,7 +18,7 @@ class FileStatus(Enum):
     """Pipeline processing states."""
     PENDING = "PENDING"
     DOWNLOADED = "DOWNLOADED"
-    COMPLETED = "COMPLETED"
+    LOADED_TO_FABRIC = "LOADED_TO_FABRIC"
     FAILED = "FAILED"
 
 
@@ -139,7 +139,7 @@ class FileTracker:
         with self._get_connection() as conn:
             tracked = conn.execute(
                 "SELECT file_name FROM file_status WHERE status = ?",
-                (FileStatus.COMPLETED.value,)
+                (FileStatus.LOADED_TO_FABRIC.value,)
             ).fetchall()
 
             completed = {row['file_name'] for row in tracked}

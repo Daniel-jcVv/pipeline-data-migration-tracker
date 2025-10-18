@@ -1,5 +1,6 @@
 """Main pipeline orchestrator."""
 import logging
+import argparse
 from src.ingestion import init_tracker_db, download_from_sftp
 from src.fabric_client import upload_to_fabric
 from src.utils.file_tracker import FileTracker, FileStatus
@@ -10,9 +11,16 @@ logger = logging.getLogger(__name__)
 
 tracker = FileTracker(config.TRACKER_DB_PATH)
 
-def run_pipeline():
-    """Execute ETL pipeline: SFTP → Staging → Fabric."""
+def run_pipeline(max_files=None):
+    """
+    Execute ETL pipeline: SFTP → Staging → Fabric.
+
+    Args:
+        max_files: Optional limit for testing (simulate partial failure)
+    """
     logger.info("Starting pipeline...")
+    if max_files:
+        logger.warning(f"⚠️  TEST MODE: Processing max {max_files} files")
 
     init_tracker_db()
 
@@ -23,6 +31,11 @@ def run_pipeline():
     if not new_files:
         logger.info("No new files to process")
         return
+
+    # Apply limit for testing if specified
+    if max_files and len(new_files) > max_files:
+        logger.info(f"Limiting to first {max_files} files for testing")
+        new_files = new_files[:max_files]
 
     # Upload each file to Fabric
     for filename in new_files:
@@ -35,11 +48,11 @@ def run_pipeline():
             upload_to_fabric(staging_path, fabric_dest)
             logger.info(f"Uploaded to Fabric: {fabric_dest}")
 
-            # Mark as complete
+            # Mark as loaded to Fabric
             file_size = staging_path.stat().st_size
             tracker.update_status(
                 filename,
-                FileStatus.COMPLETED,
+                FileStatus.LOADED_TO_FABRIC,
                 file_size=file_size
             )
             
@@ -51,4 +64,14 @@ def run_pipeline():
     logger.info("Pipeline completed")
 
 if __name__ == "__main__":
-    run_pipeline()
+    parser = argparse.ArgumentParser(
+        description='SFTP to Fabric migration pipeline with idempotent file tracking'
+    )
+    parser.add_argument(
+        '--max-files',
+        type=int,
+        help='Limit number of files to process (for testing partial failures)'
+    )
+
+    args = parser.parse_args()
+    run_pipeline(max_files=args.max_files)
