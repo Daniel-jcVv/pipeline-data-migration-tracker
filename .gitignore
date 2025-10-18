@@ -72,9 +72,9 @@ temp/
 *.tmp
 
 # Data Files 
-data/bronze
-data/silver
-.sample-data/
+data/staging
+
+
 
 
 # Test Coverage
