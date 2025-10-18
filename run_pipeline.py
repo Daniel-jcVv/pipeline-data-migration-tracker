@@ -20,22 +20,17 @@ def run_pipeline(max_files=None):
     """
     logger.info("Starting pipeline...")
     if max_files:
-        logger.warning(f"⚠️  TEST MODE: Processing max {max_files} files")
+        logger.warning(f"  TEST MODE: Processing max {max_files} files")
 
     init_tracker_db()
 
-    # Download new files to staging
-    new_files = download_from_sftp()
+    # Download new files to staging (with limit if specified)
+    new_files = download_from_sftp(max_files=max_files)
     logger.info(f"Downloaded {len(new_files)} new files")
 
     if not new_files:
         logger.info("No new files to process")
         return
-
-    # Apply limit for testing if specified
-    if max_files and len(new_files) > max_files:
-        logger.info(f"Limiting to first {max_files} files for testing")
-        new_files = new_files[:max_files]
 
     # Upload each file to Fabric
     for filename in new_files:

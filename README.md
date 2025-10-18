@@ -304,7 +304,7 @@ mark_as_processed(conn, 'orders.csv', status='LOADED')
 CREATE TABLE file_tracker (
     filename TEXT PRIMARY KEY,
     load_date TEXT NOT NULL,
-    status TEXT NOT NULL,        -- LOADED, FAILED, PROCESSING
+    status TEXT NOT NULL,        -- LOADED_TO_FABRIC, FAILED, PROCESSING
     file_size INTEGER,
     record_count INTEGER
 );

@@ -17,9 +17,12 @@ def init_tracker_db():
     tracker.init_db()
 
 
-def download_from_sftp() -> List[str]:
+def download_from_sftp(max_files=None) -> List[str]:
     """
     Download new files from SFTP to local staging folder.
+
+    Args:
+        max_files: Optional limit for testing (only download first N files)
 
     Returns:
         List of newly downloaded filenames
@@ -48,7 +51,12 @@ def download_from_sftp() -> List[str]:
     
     # Filter pending files using tracker
     pending_files = tracker.get_pending_files(available_files)
-    
+
+    # Apply limit if specified (for testing)
+    if max_files and len(pending_files) > max_files:
+        logger.info(f"Limiting to first {max_files} files for testing")
+        pending_files = pending_files[:max_files]
+
     # Download pending files
     downloaded = []
     for filename in pending_files:
