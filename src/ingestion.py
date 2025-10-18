@@ -82,9 +82,9 @@ def download_from_sftp() -> List[str]:
 
 
 def mark_as_processed(filename: str, record_count: int = None):
-    """Mark file as fully processed (COMPLETED)."""
+    """Mark file as fully processed (LOADED_TO_FABRIC)."""
     tracker.update_status(
         filename,
-        FileStatus.COMPLETED,
+        FileStatus.LOADED_TO_FABRIC,
         record_count=record_count
     )
