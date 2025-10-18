@@ -220,10 +220,9 @@ Real Microsoft Fabric integration validated with production screenshots:
 
 **Daniel Garcia Belman**
 Data Engineer | Python Developer | Big Data
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?logo=linkedin&logoColor=white)](www.linkedin.com/in/daniel-garcía-belman-99a298aa)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?logo=github&logoColor=white)](https://github.com/Daniel-jcVv)
-[![Email](https://img.shields.io/badge/Email-Contact-D14836?logo=gmail&logoColor=white)](mailto:daniel_ys1@outlook.com)
+- Email: danielgb331@outlook.com
+- GitHub: [@Daniel-jcVv](https://github.com/Daniel-jcVv/Daniel-jcVv)
+- LinkedIn: [My LinkenIn Profile](www.linkedin.com/in/daniel-garcía-belman-99a298aa)
 
 ---
 
