@@ -439,10 +439,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-**Ora et labora, ahora**
-**Soli Deo gloria**
-My gratitude to the open-source community for generously sharing their knowledge.
-
+>**Ora et labora, ahora**
+>**Soli Deo gloria**
+>My gratitude to the open-source community for generously sharing their knowledge.
 
 ---
 
